@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:affirmation_app/gears/user_profile.dart';
+//import 'package:affirmation_app/gears/user_profile.dart';
+import 'package:affirmation_app/gears/logic.dart';
 
 class Checkin extends StatefulWidget {
   const Checkin({super.key});
@@ -12,21 +13,19 @@ class _CheckinState extends State<Checkin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          foregroundColor: Colors.black,
-          centerTitle: true,
-          title: const Text(
-            'Welcome to Awesome Daily Affirmations',
-          ),
-          backgroundColor: Colors.greenAccent,
+      appBar: AppBar(
+        foregroundColor: Colors.black,
+        centerTitle: true,
+        title: const Text(
+          'Welcome to Awesome Daily Affirmations',
         ),
-        body: const Column(
-          children: [
-            Expanded(
-                child: Row(
-              children: [],
-            ))
-          ],
-        ));
+        backgroundColor: Colors.greenAccent,
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [Text(affirm(logic))],
+        crossAxisAlignment: CrossAxisAlignment.center,
+      ),
+    );
   }
 }
