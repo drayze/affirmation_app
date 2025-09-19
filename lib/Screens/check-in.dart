@@ -21,7 +21,12 @@ class _CheckinState extends State<Checkin> {
           backgroundColor: Colors.greenAccent,
         ),
         body: const Column(
-          children: [Expanded(child: UserProfile())],
+          children: [
+            Expanded(
+                child: Row(
+              children: [],
+            ))
+          ],
         ));
   }
 }
