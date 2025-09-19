@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:affirmation_app/Screens/check-in.dart';
-import 'package:affirmation_app/gears/logic.dart';
 
 void main() {
   runApp(const Affirmations());
@@ -14,7 +13,7 @@ class Affirmations extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark(),
-      home: Checkin(),
+      home: const Checkin(),
     );
   }
 }

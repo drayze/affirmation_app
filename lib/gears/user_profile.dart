@@ -2,16 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class UserProfile extends StatelessWidget {
-  UserProfile();
+  const UserProfile({super.key, this.profile});
 
   final profile;
 
   @override
-  Widget build(BuildContext context)
+  Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){},
+      onTap: () {},
       child: Container(
-  child: profile,
-  ),
-      );
+        child: profile,
+      ),
+    );
+  }
 }

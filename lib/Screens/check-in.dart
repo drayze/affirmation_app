@@ -15,13 +15,18 @@ class _CheckinState extends State<Checkin> {
         appBar: AppBar(
           foregroundColor: Colors.black,
           centerTitle: true,
-          title: Text(
+          title: const Text(
             'Welcome to Awesome Daily Affirmations',
           ),
           backgroundColor: Colors.greenAccent,
         ),
-        body: Column(
-          children: [Expanded(child: UserProfile())],
+        body: const Column(
+          children: [
+            Expanded(
+                child: Row(
+              children: [],
+            ))
+          ],
         ));
   }
 }
