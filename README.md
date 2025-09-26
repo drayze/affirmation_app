@@ -1,16 +1,9 @@
-# second_try
+# affirmation_app
 
-A new Flutter project.
+An app to change lives.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Many people struggle with mental health, feelings of disenfranchisement from their own lives, or just a lack of motivation. A lot of the time we just need to hear we are important. Sometimes just knowing you're not alone can save your life. I was inspired to write this app by a dear friend, who brought up the idea. In thinking about my own struggles, I realized that was how I battle my demons, too. By telling myself things to motivate and inspire, or sometimes things that would provoke anger in me, just to ignite a fire under myself, and help me find empowerment. So, I hope that this app will help some people. If it helps just one person, then all the time I put into creating it, was time well spent.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+As for features, it starts with the affirmation. Next to that a wide range of color schemes to give users the ability to see colors they enjoy not the colors selected for them. Also, to display the date and time and I plan to incorporate some animations to give a little joy to the day.
