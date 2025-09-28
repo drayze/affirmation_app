@@ -62,7 +62,7 @@ class CheckInState extends State<CheckIn> {
                   backgroundColor: Colors.purple,
                   foregroundColor: Colors.white,
                 ),
-                child: Text("Refresh", style: TextStyle(fontSize: 17.0)),
+                child: Text("Renew", style: TextStyle(fontSize: 17.0)),
               ),
               const Text(style: TextStyle(fontSize: 50.0), '🦋 🌻 🦋 🌼 🪻'),
             ],
