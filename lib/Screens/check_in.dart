@@ -91,7 +91,7 @@ class CheckInState extends State<CheckIn> {
         backgroundColor: widget.currentSettings.appBarColor,
         actions: [
           IconButton(
-            icon: const Icon(Icons.settings),
+            icon: const Icon(Icons.person_rounded),
             onPressed: () {
               _updateSettings(widget.currentSettings);
             },
