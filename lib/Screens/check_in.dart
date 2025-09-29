@@ -122,7 +122,7 @@ class CheckInState extends State<CheckIn> {
               TextButton(
                 onPressed: _updateAffirmation,
                 style: TextButton.styleFrom(
-                  backgroundColor: widget.currentSettings.backgroundColor,
+                  backgroundColor: widget.currentSettings.appBarColor,
                   foregroundColor: Colors.white,
                 ),
                 child: Text("Renew", style: TextStyle(fontSize: 17.0)),
