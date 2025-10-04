@@ -1,4 +1,4 @@
-package com.example.second_try
+package com.drayze.daily_support
 
 import io.flutter.embedding.android.FlutterActivity
 
