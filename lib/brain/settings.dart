@@ -28,13 +28,13 @@ class Settings {
     appBarColor: Colors.black,
     backgroundColor: Colors.orangeAccent,
     topRow: '💀       👻',
-    bottomRow: '🦇 🩻 👽 🎃 🧟‍♂️️',
+    bottomRow: '🦇 ☠️ 👽 🎃 🧟‍♂️️',
   );
 
   static const Settings kindness = Settings(
     id: 'kindness',
-    appBarColor: Colors.green,
-    backgroundColor: Colors.tealAccent,
+    appBarColor: Colors.brown,
+    backgroundColor: Colors.white70,
     topRow: '😻       😽',
     bottomRow: '🐻 🐺 🐶 🦝 🐻‍❄️',
   );
