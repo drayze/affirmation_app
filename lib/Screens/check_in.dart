@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:daily_support/gears/affirmation_provider.dart';
+import 'package:daily_support/gears/affirmationProvider.dart';
 import 'package:daily_support/brain/settings.dart';
 
-AffirmationProvider affirmationProvider =
-    AffirmationProvider.withDefaultAffirmations();
+//AffirmationProvider affirmationProvider =
+//AffirmationProvider.withDefaultAffirmations();
 
 class CheckIn extends StatefulWidget {
   final Settings currentSettings;

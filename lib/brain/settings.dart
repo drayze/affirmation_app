@@ -28,7 +28,7 @@ class Settings {
     appBarColor: Colors.black,
     backgroundColor: Colors.orangeAccent,
     topRow: '💀       👻',
-    bottomRow: '🦇 🩻 👽 🎃 🧟‍♂️️',
+    bottomRow: '🦇 ☠️ 👽 🎃 🧟‍♂️️',
   );
 
   static const Settings kindness = Settings(
