@@ -3,6 +3,7 @@ import 'package:second_try/Screens/check_in.dart';
 import 'package:second_try/brain/settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+//main function to run the app
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
@@ -12,6 +13,7 @@ void main() async {
   runApp(Affirmations(initSettings: initSettings));
 }
 
+//Affirmations class to run the app
 class Affirmations extends StatefulWidget {
   final Settings initSettings;
   const Affirmations({super.key, required this.initSettings});
@@ -20,6 +22,7 @@ class Affirmations extends StatefulWidget {
   State<Affirmations> createState() => _AffirmationsState();
 }
 
+//_AffirmationsState class to run the app
 class _AffirmationsState extends State<Affirmations> {
   late Settings _currentSettings;
 
@@ -29,6 +32,7 @@ class _AffirmationsState extends State<Affirmations> {
     _currentSettings = widget.initSettings;
   }
 
+  // Function to check for current settings and update if needed
   void updateSettings(Settings newSettings) async {
     setState(() {
       _currentSettings = newSettings;

@@ -1,6 +1,7 @@
 import 'dart:math';
 
-//this is the code for the affirmation provider
+//this is the code for the affirmation provider functionality
+//class containing a list of affirmations to pull from
 class AffirmationProvider {
   final List<String> _affirmations;
 
@@ -110,11 +111,12 @@ class AffirmationProvider {
       "I love you more than you will ever know!",
     ]);
   }
+  //check screen for affirmation
   String getAffirmation() {
     if (_affirmations.isEmpty) {
       return "No affirmations available.";
     }
-
+    //get a random affirmation via a random int
     final random = Random();
     final index = random.nextInt(_affirmations.length);
     return _affirmations[index];

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:second_try/gears/affirmationProvider.dart';
 import 'package:second_try/brain/settings.dart';
 
-AffirmationProvider affirmationProvider =
-    AffirmationProvider.withDefaultAffirmations();
+//AffirmationProvider affirmationProvider =
+//  AffirmationProvider.withDefaultAffirmations();
 
+//Start off with the check in page for the settings
 class CheckIn extends StatefulWidget {
   final Settings currentSettings;
   final void Function(Settings) updateSettings;
@@ -19,6 +20,7 @@ class CheckIn extends StatefulWidget {
   CheckInState createState() => CheckInState();
 }
 
+//state for affirmation provider
 class CheckInState extends State<CheckIn> {
   final AffirmationProvider affirmationProvider =
       AffirmationProvider.withDefaultAffirmations();
@@ -30,12 +32,14 @@ class CheckInState extends State<CheckIn> {
     currentAffirmation = affirmationProvider.getAffirmation();
   }
 
+  //function to update the affirmation
   void _updateAffirmation() {
     setState(() {
       currentAffirmation = affirmationProvider.getAffirmation();
     });
   }
 
+  //function to update the settings which displays a dialog box with the options
   void _updateSettings(Settings newSettings) {
     showDialog(
       context: context,
@@ -80,6 +84,7 @@ class CheckInState extends State<CheckIn> {
     );
   }
 
+  //Here is the build function for the check in page
   @override
   Widget build(BuildContext context) {
     return Scaffold(

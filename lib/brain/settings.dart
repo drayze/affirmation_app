@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+//A class containing settings themes for the user to choose from
 
 class Settings {
   final String id;
@@ -14,7 +15,7 @@ class Settings {
     required this.topRow,
     required this.bottomRow,
   });
-
+  //Themes
   static const Settings loved = Settings(
     id: 'loved',
     appBarColor: Colors.purple,
