@@ -1,5 +1,6 @@
 import 'dart:math';
 
+//this is the code for the affirmation provider
 class AffirmationProvider {
   final List<String> _affirmations;
 
@@ -106,7 +107,7 @@ class AffirmationProvider {
       "When I speak my needs, I receive them abundantly.",
       "When I talk to myself as I would a friend, I see all my best qualities and I allow myself to shine.",
       "Words may shape me, but they do not make me. I am here already.",
-      "I love you more than you will ever know!"
+      "I love you more than you will ever know!",
     ]);
   }
   String getAffirmation() {
