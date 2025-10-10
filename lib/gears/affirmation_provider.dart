@@ -122,13 +122,3 @@ class AffirmationProvider {
     return _affirmations[index];
   }
 }
-
-void main() {
-  final affirmationProvider = AffirmationProvider.withDefaultAffirmations();
-
-  String myAffirmation = affirmationProvider.getAffirmation();
-  print(myAffirmation);
-
-  String anotherAffirmation = affirmationProvider.getAffirmation();
-  print(anotherAffirmation);
-}

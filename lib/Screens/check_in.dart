@@ -1,9 +1,9 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:second_try/gears/affirmationProvider.dart';
-import 'package:second_try/brain/settings.dart';
-
-//AffirmationProvider affirmationProvider =
-//  AffirmationProvider.withDefaultAffirmations();
+import 'package:image_picker/image_picker.dart';
+import 'package:b_kind_2_u/gears/custom_image_handler.dart';
+import 'package:b_kind_2_u/gears/affirmation_provider.dart';
+import 'package:b_kind_2_u/brain/settings.dart';
 
 //Start off with the check in page for the settings
 class CheckIn extends StatefulWidget {
@@ -25,11 +25,71 @@ class CheckInState extends State<CheckIn> {
   final AffirmationProvider affirmationProvider =
       AffirmationProvider.withDefaultAffirmations();
 
-  late String currentAffirmation;
+  late String currentAffirmation; // Holds the current affirmation
+
+  final CustomImageHandler _imageHandler = CustomImageHandler();
+  File? _backgroundImageFile; // Holds the background image file
+
   @override
   void initState() {
     super.initState();
-    currentAffirmation = affirmationProvider.getAffirmation();
+    currentAffirmation = affirmationProvider
+        .getAffirmation(); // Initialize the affirmation
+    _loadBackgroundImage(); // Load the background image
+  }
+
+  // Function to load the background image
+  void _loadBackgroundImage() async {
+    final imageFile = await _imageHandler.loadSavedImage();
+    if (imageFile != null) {
+      setState(() {
+        _backgroundImageFile = imageFile;
+      });
+    }
+  }
+
+  // Function to pick a new background image
+  void _pickNewBackgroundImage(ImageSource source) async {
+    final newImageFile = await _imageHandler.pickAndSaveImage(source);
+    if (newImageFile != null) {
+      setState(() {
+        _backgroundImageFile = newImageFile;
+      });
+    }
+  }
+
+  // Function to show a dialog to choose between Camera or Gallery
+  void _showImageSourceDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext innerContext) {
+        // Use a different context name to avoid conflict
+        return AlertDialog(
+          title: const Text("Select Image Source"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text("From Gallery"),
+                onTap: () {
+                  Navigator.of(innerContext).pop(); // Close this dialog
+                  _pickNewBackgroundImage(ImageSource.gallery);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.camera_alt),
+                title: const Text("From Camera"),
+                onTap: () {
+                  Navigator.of(innerContext).pop(); // Close this dialog
+                  _pickNewBackgroundImage(ImageSource.camera);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   //function to update the affirmation
@@ -92,7 +152,7 @@ class CheckInState extends State<CheckIn> {
       appBar: AppBar(
         foregroundColor: Colors.white,
         centerTitle: true,
-        title: const Text('B KInd 2 U'),
+        title: const Text('B Kind 2 U'),
         backgroundColor: widget.currentSettings.appBarColor,
         actions: [
           IconButton(

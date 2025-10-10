@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:second_try/Screens/check_in.dart';
-import 'package:second_try/brain/settings.dart';
+import 'package:b_kind_2_u/Screens/check_in.dart';
+import 'package:b_kind_2_u/brain/settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 //main function to run the app
