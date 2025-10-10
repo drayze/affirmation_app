@@ -10,7 +10,7 @@
 
 
     <application
-        android:label="b_kind_2_u"
+        android:label="B Kind 2 U"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
