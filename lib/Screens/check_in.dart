@@ -29,6 +29,7 @@ class CheckInState extends State<CheckIn> {
 
   final CustomImageHandler _imageHandler = CustomImageHandler();
   File? _backgroundImageFile; // Holds the background image file
+  bool _showCustomBackground = false; // Flag to show the custom background
 
   @override
   void initState() {
@@ -44,6 +45,7 @@ class CheckInState extends State<CheckIn> {
     if (imageFile != null) {
       setState(() {
         _backgroundImageFile = imageFile;
+        _showCustomBackground = true;
       });
     }
   }
@@ -54,6 +56,7 @@ class CheckInState extends State<CheckIn> {
     if (newImageFile != null) {
       setState(() {
         _backgroundImageFile = newImageFile;
+        _showCustomBackground = true;
       });
     }
   }
@@ -100,7 +103,7 @@ class CheckInState extends State<CheckIn> {
   }
 
   //function to update the settings which displays a dialog box with the options
-  void _updateSettings(Settings newSettings) {
+  void _showSettingsDialog() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -118,8 +121,15 @@ class CheckInState extends State<CheckIn> {
                   leading: const Icon(Icons.add_photo_alternate),
                   title: const Text('Choose a custom image'),
                   onTap: () {
-                    Navigator.pop(context);
-                    _showImageSourceDialog();
+                    if (_backgroundImageFile == null) {
+                      Navigator.pop(context);
+                      _showImageSourceDialog();
+                    } else {
+                      setState(() {
+                        _showCustomBackground = true;
+                      });
+                      Navigator.pop(context);
+                    }
                   },
                 ),
                 if (_backgroundImageFile != null)
@@ -143,6 +153,9 @@ class CheckInState extends State<CheckIn> {
                   title: Text('Loved'),
                   onTap: () {
                     widget.updateSettings(Settings.loved);
+                    setState(() {
+                      _showCustomBackground = false;
+                    });
                     Navigator.pop(context);
                   },
                 ),
@@ -150,6 +163,9 @@ class CheckInState extends State<CheckIn> {
                   title: Text('Darkness'),
                   onTap: () {
                     widget.updateSettings(Settings.darkness);
+                    setState(() {
+                      _showCustomBackground = false;
+                    });
                     Navigator.pop(context);
                   },
                 ),
@@ -157,6 +173,9 @@ class CheckInState extends State<CheckIn> {
                   title: Text('Kindness'),
                   onTap: () {
                     widget.updateSettings(Settings.kindness);
+                    setState(() {
+                      _showCustomBackground = false;
+                    });
                     Navigator.pop(context);
                   },
                 ),
@@ -164,6 +183,9 @@ class CheckInState extends State<CheckIn> {
                   title: Text('Inspired'),
                   onTap: () {
                     widget.updateSettings(Settings.inspired);
+                    setState(() {
+                      _showCustomBackground = false;
+                    });
                     Navigator.pop(context);
                   },
                 ),
@@ -178,8 +200,9 @@ class CheckInState extends State<CheckIn> {
   //Here is the build function for the check in page
   @override
   Widget build(BuildContext context) {
+    final bool useImageAsBackground =
+        _backgroundImageFile != null && _showCustomBackground;
     return Scaffold(
-      backgroundColor: widget.currentSettings.backgroundColor,
       appBar: AppBar(
         foregroundColor: Colors.white,
         centerTitle: true,
@@ -189,45 +212,64 @@ class CheckInState extends State<CheckIn> {
           IconButton(
             icon: const Icon(Icons.person_rounded),
             onPressed: () {
-              _updateSettings(widget.currentSettings);
+              _showSettingsDialog();
             },
           ),
         ],
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                widget.currentSettings.topRow,
-                style: const TextStyle(fontSize: 46.0),
-              ),
-              Text(
-                currentAffirmation,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 28.0,
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic,
-                  //letterSpacing: 1.5,
+      body: Container(
+        decoration: BoxDecoration(
+          image: useImageAsBackground
+              ? DecorationImage(
+                  image: FileImage(_backgroundImageFile!),
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                    Colors.black.withOpacity(0.0),
+                    BlendMode.darken,
+                  ),
+                )
+              : null,
+          color: !useImageAsBackground
+              ? widget.currentSettings.backgroundColor
+              : null,
+        ),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  widget.currentSettings.topRow,
+                  style: const TextStyle(fontSize: 46.0),
                 ),
-              ),
-              TextButton(
-                onPressed: _updateAffirmation,
-                style: TextButton.styleFrom(
-                  backgroundColor: widget.currentSettings.appBarColor,
-                  foregroundColor: Colors.white,
+                Text(
+                  currentAffirmation,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 28.0,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                    //color: _backgroundImageFile != null
+                    //  ? Colors.white
+                    //: Colors.black,
+                  ),
                 ),
-                child: Text("Renew", style: TextStyle(fontSize: 17.0)),
-              ),
-              Text(
-                widget.currentSettings.bottomRow,
-                style: const TextStyle(fontSize: 50.0),
-              ),
-            ],
+                TextButton(
+                  onPressed: _updateAffirmation,
+                  style: TextButton.styleFrom(
+                    backgroundColor: widget.currentSettings.appBarColor,
+                    foregroundColor: Colors.white,
+                  ),
+                  child: Text("Renew", style: TextStyle(fontSize: 17.0)),
+                ),
+                Text(
+                  widget.currentSettings.bottomRow,
+                  style: const TextStyle(fontSize: 50.0),
+                ),
+              ],
+            ),
           ),
         ),
       ),
