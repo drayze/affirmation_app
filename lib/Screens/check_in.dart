@@ -92,7 +92,7 @@ class CheckInState extends State<CheckIn> {
       appBar: AppBar(
         foregroundColor: Colors.white,
         centerTitle: true,
-        title: const Text('Welcome to Awesome Daily Affirmations'),
+        title: const Text('B KInd 2 U'),
         backgroundColor: widget.currentSettings.appBarColor,
         actions: [
           IconButton(

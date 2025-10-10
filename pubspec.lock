@@ -158,6 +158,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.6"
+  flutter_rename_app_plus3:
+    dependency: "direct dev"
+    description:
+      name: flutter_rename_app_plus3
+      sha256: bea6097a403ce7c4e255247acb31793c26fae67d92dd08731cb1588b0839f635
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.4"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -312,6 +320,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.3"
+  process_run:
+    dependency: transitive
+    description:
+      name: process_run
+      sha256: "3d5335d17003a7c2fd5148be2d313f5b84244ab2e625162fdd44b4aaa48bea66"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.13.3+1"
+  pub_semver:
+    dependency: transitive
+    description:
+      name: pub_semver
+      sha256: "5bfcf68ca79ef689f8990d1160781b4bad40a3bd5e5218ad4076ddb7f4081585"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.0"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -405,6 +429,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.1"
+  synchronized:
+    dependency: transitive
+    description:
+      name: synchronized
+      sha256: c254ade258ec8282947a0acbbc90b9575b4f19673533ee46f2f6e9b3aeefd7c0
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.4.0"
   term_glyph:
     dependency: transitive
     description:
