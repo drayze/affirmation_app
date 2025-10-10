@@ -56,6 +56,8 @@ class CheckInState extends State<CheckIn> {
     if (newImageFile != null) {
       setState(() {
         _backgroundImageFile = newImageFile;
+      });
+      setState(() {
         _showCustomBackground = true;
       });
     }
@@ -240,20 +242,32 @@ class CheckInState extends State<CheckIn> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  widget.currentSettings.topRow,
-                  style: const TextStyle(fontSize: 46.0),
-                ),
-                Text(
-                  currentAffirmation,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 28.0,
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic,
-                    //color: _backgroundImageFile != null
-                    //  ? Colors.white
-                    //: Colors.black,
+                if (!useImageAsBackground)
+                  Text(
+                    widget.currentSettings.topRow,
+                    style: const TextStyle(fontSize: 46.0),
+                  ),
+
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: 12.0,
+                  ),
+                  decoration: useImageAsBackground
+                      ? BoxDecoration(
+                          color: Colors.white.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(45.0),
+                        )
+                      : null,
+                  child: Text(
+                    currentAffirmation,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 28.0,
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.italic,
+                      color: Colors.black87,
+                    ),
                   ),
                 ),
                 TextButton(
@@ -264,10 +278,11 @@ class CheckInState extends State<CheckIn> {
                   ),
                   child: Text("Renew", style: TextStyle(fontSize: 17.0)),
                 ),
-                Text(
-                  widget.currentSettings.bottomRow,
-                  style: const TextStyle(fontSize: 50.0),
-                ),
+                if (!useImageAsBackground)
+                  Text(
+                    widget.currentSettings.bottomRow,
+                    style: const TextStyle(fontSize: 50.0),
+                  ),
               ],
             ),
           ),
