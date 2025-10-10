@@ -105,39 +105,70 @@ class CheckInState extends State<CheckIn> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Change Settings'),
-          content: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ListTile(
-                title: Text('Loved'),
-                onTap: () {
-                  widget.updateSettings(Settings.loved);
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title: Text('Darkness'),
-                onTap: () {
-                  widget.updateSettings(Settings.darkness);
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title: Text('Kindness'),
-                onTap: () {
-                  widget.updateSettings(Settings.kindness);
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title: Text('Inspired'),
-                onTap: () {
-                  widget.updateSettings(Settings.inspired);
-                  Navigator.pop(context);
-                },
-              ),
-            ],
+          title: const Text('Change Settings'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'Change Background',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.add_photo_alternate),
+                  title: const Text('Choose a custom image'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    _showImageSourceDialog();
+                  },
+                ),
+                if (_backgroundImageFile != null)
+                  ListTile(
+                    leading: const Icon(Icons.hide_image),
+                    title: const Text('Remove background image'),
+                    onTap: () {
+                      _imageHandler.clearSavedImage();
+                      setState(() {
+                        _backgroundImageFile = null;
+                      });
+                      Navigator.pop(context);
+                    },
+                  ),
+                const Divider(),
+                const Text(
+                  'Change Theme',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                ListTile(
+                  title: Text('Loved'),
+                  onTap: () {
+                    widget.updateSettings(Settings.loved);
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  title: Text('Darkness'),
+                  onTap: () {
+                    widget.updateSettings(Settings.darkness);
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  title: Text('Kindness'),
+                  onTap: () {
+                    widget.updateSettings(Settings.kindness);
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  title: Text('Inspired'),
+                  onTap: () {
+                    widget.updateSettings(Settings.inspired);
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
           ),
         );
       },
