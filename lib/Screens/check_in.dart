@@ -255,7 +255,7 @@ class CheckInState extends State<CheckIn> {
                   ),
                   decoration: useImageAsBackground
                       ? BoxDecoration(
-                          color: Colors.white.withOpacity(0.5),
+                          color: Colors.white.withOpacity(0.7),
                           borderRadius: BorderRadius.circular(45.0),
                         )
                       : null,
