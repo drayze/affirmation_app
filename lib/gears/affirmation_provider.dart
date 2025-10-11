@@ -7,6 +7,7 @@ class AffirmationProvider {
 
   AffirmationProvider(this._affirmations);
 
+  // Affirmation list to be used by the provider
   factory AffirmationProvider.withDefaultAffirmations() {
     return AffirmationProvider([
       "Asking for help is a sign of self-respect and self-awareness.",
@@ -158,8 +159,8 @@ class AffirmationProvider {
       "Flowers grow out of dirt and manure. Blooming, Baby!",
       "Everything I need to get it done is already inside of me.",
       "Your ending is unwritten. It's never too late to build the life you deserve.",
-      "No one else is dwelling on your mistakes. Neither should you."
-          "I am so proud of how far I've come, and I'm not done yet.",
+      "No one else is dwelling on your mistakes. Neither should you.",
+      "I am so proud of how far I've come, and I'm not done yet.",
       "I let no one disturb my peace.",
       "Don't water yourself down for anyone. If you're too much for them, it's their problem.",
       "Don't hold your tears in. Get them out, breathe, and feel better.",
