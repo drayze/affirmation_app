@@ -2,13 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:b_kind_2_u/Screens/check_in.dart';
 import 'package:b_kind_2_u/brain/settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
+import 'brain/notifications.dart';
 
 //main function to run the app
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize timezone to get local timezone
+  tz.initializeTimeZones();
+  final String timeZoneName = await FlutterTimezone.getLocalTimezone();
+  tz.setLocalLocation(tz.getLocation(timeZoneName));
+
+  // Check sharedPreferences for saved settings and defaulted to 'loved' if empty
   final prefs = await SharedPreferences.getInstance();
   final settingsId = prefs.getString('settings') ?? Settings.loved.id;
   final initSettings = Settings.allSettings[settingsId] ?? Settings.loved;
+
+  // initialize notifications
+  await Notifications().init();
 
   runApp(Affirmations(initSettings: initSettings));
 }

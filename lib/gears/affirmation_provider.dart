@@ -154,7 +154,7 @@ class AffirmationProvider {
       "Don't support anyone who doesn't support you.",
       "Don't take anyone's negativity. You deserve respect, all of the time.",
       "I'm tougher than my toughest day.",
-      "If you believe in yourself, others will too",
+      "If you believe in yourself, others will too.",
       "Don't forget to celebrate the silent battles that you won today.",
       "Flowers grow out of dirt and manure. Blooming, Baby!",
       "Everything I need to get it done is already inside of me.",
