@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:b_kind_2_u/gears/custom_image_handler.dart';
 import 'package:b_kind_2_u/gears/affirmation_provider.dart';
 import 'package:b_kind_2_u/brain/settings.dart';
+import 'package:b_kind_2_u/brain/notifications.dart';
 
 //Start off with the check in page for the settings
 class CheckIn extends StatefulWidget {
@@ -95,6 +96,35 @@ class CheckInState extends State<CheckIn> {
         );
       },
     );
+  }
+
+  // Function to handle the set of a daily notification
+  Future<void> _setDailyNotification() async {
+    final TimeOfDay? selectedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+
+    if (selectedTime != null) {
+      final now = DateTime.now();
+      final selectedDateTime = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        selectedTime.hour,
+        selectedTime.minute,
+      );
+      await Notifications().scheduleNotification(selectedDateTime);
+      debugPrint("Notification set for $selectedDateTime");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Daily Reminder set for ${selectedTime.format(context)}",
+          ),
+          duration: const Duration(seconds: 3),
+        ),
+      );
+    }
   }
 
   //function to update the affirmation
@@ -189,6 +219,19 @@ class CheckInState extends State<CheckIn> {
                       _showCustomBackground = false;
                     });
                     Navigator.pop(context);
+                  },
+                ),
+                const Divider(),
+                const Text(
+                  'Set Daily Notification',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.timer_outlined),
+                  title: const Text('Set daily reminder'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    _setDailyNotification();
                   },
                 ),
               ],
