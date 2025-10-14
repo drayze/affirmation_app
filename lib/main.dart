@@ -13,8 +13,9 @@ void main() async {
 
   // Initialize timezone to get local timezone
   tz.initializeTimeZones();
-  final String timeZoneName = await FlutterTimezone.getLocalTimezone();
-  tz.setLocalLocation(tz.getLocation(timeZoneName));
+  final TimezoneInfo currentTimeZone = await FlutterTimezone.getLocalTimezone();
+  //final String timeZoneName = await FlutterTimezone.getLocalTimezone();
+  tz.setLocalLocation(tz.getLocation(currentTimeZone.identifier));
 
   // Check sharedPreferences for saved settings and defaulted to 'loved' if empty
   final prefs = await SharedPreferences.getInstance();

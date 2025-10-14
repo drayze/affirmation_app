@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
-//import 'package:timezone/data/latest.dart' as tz;
+import 'package:flutter/foundation.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 // This function needs to be a top-level function (not inside a class)
 // It handles what happens when a user taps on the notification.
@@ -16,8 +18,8 @@ Future<void> onSelectNotification(
 class Notifications {
   static const String channelId = 'daily_affirmation_channel';
   static const String channelName = 'Daily Affirmations';
-  //static const String channelDescription =
-  //'Channel for daily affirmation reminders';
+  static const String channelDescription =
+      'Daily affirmations and check-in reminders';
 
   static final Notifications _notifications = Notifications._internal();
   factory Notifications() {
@@ -27,24 +29,25 @@ class Notifications {
 
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
+  Future<void> initializeTimeZones() async {
+    tz.initializeTimeZones();
+    debugPrint("Timezones initialized");
+  }
 
   Future<void> init() async {
-    //tz.initializeTimeZones();
-    //final String currentTimeZone = DateTime.now().timeZoneName;
-    //tz.setLocalLocation(tz.getLocation(currentTimeZone));
-
+    await initializeTimeZones();
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings("@mipmap/ic_launcher");
-    //final IOSInitializationSettings iosInitializationSettingsIOS =
-    //  IOSInitializationSettings(
-    // requestAlertPermission: false,
-    // requestBadgePermission: false,
-    // requestSoundPermission: false,
-    //);
+    const DarwinInitializationSettings initializationSettingsIOS =
+        DarwinInitializationSettings(
+          requestAlertPermission: true,
+          requestBadgePermission: true,
+          requestSoundPermission: true,
+        );
     const InitializationSettings initializationSettings =
         InitializationSettings(
           android: initializationSettingsAndroid,
-          //iOS: initializationSettingsIOS,
+          iOS: initializationSettingsIOS,
         );
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
@@ -53,26 +56,33 @@ class Notifications {
     debugPrint("Notifications initialized");
   }
 
-  NotificationDetails constNotificationDetails() {
-    return const NotificationDetails(
-      android: AndroidNotificationDetails(
-        channelId,
-        channelName,
-        importance: Importance.max,
-        priority: Priority.high,
-        showWhen: false,
-      ),
-      //iOS: IOSNotificationDetails(),
-    );
+  Future<bool> _requestAllPermission() async {
+    // Request permission for notifications
+    PermissionStatus notificationStatus = await Permission.notification.status;
+    if (notificationStatus.isDenied) {
+      notificationStatus = await Permission.notification.request();
+    }
+    // Request permission for exact alarm
+    PermissionStatus exactAlarmStatus =
+        await Permission.scheduleExactAlarm.status;
+    if (exactAlarmStatus.isDenied) {
+      exactAlarmStatus = await Permission.scheduleExactAlarm.request();
+    }
+    debugPrint("Notification permission status: $notificationStatus");
+    debugPrint("Exact alarm permission status: $exactAlarmStatus");
+    return notificationStatus.isGranted && exactAlarmStatus.isGranted;
   }
 
   Future<void> scheduleNotification(DateTime notificationTime) async {
-    if (notificationTime.isBefore(DateTime.now())) {
-      notificationTime = notificationTime.add(const Duration(days: 1));
+    final bool hasPermission = await _requestAllPermission();
+    if (!hasPermission) {
+      debugPrint(
+        "One or more permissions were denied. Cannot schedule notification.",
+      );
+      return;
     }
-    final tz.TZDateTime scheduledNotificationTime = tz.TZDateTime.from(
+    final tz.TZDateTime scheduledNotificationTime = _nextInstanceOfNotification(
       notificationTime,
-      tz.local,
     );
     try {
       await flutterLocalNotificationsPlugin.zonedSchedule(
@@ -80,10 +90,8 @@ class Notifications {
         "Daily Reminder",
         "Don't forget to be kind 2 u",
         scheduledNotificationTime,
-        constNotificationDetails(), // Get the details from our helper method
+        _constNotificationDetails(), // Get the details from our helper method
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents:
             DateTimeComponents.time, // Repeat daily at this time
       );
@@ -93,5 +101,35 @@ class Notifications {
     } catch (e) {
       debugPrint("Error scheduling notification: $e");
     }
+  }
+
+  tz.TZDateTime _nextInstanceOfNotification(DateTime time) {
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    tz.TZDateTime scheduledDate = tz.TZDateTime(
+      tz.local,
+      now.year,
+      now.month,
+      now.day,
+      time.hour,
+      time.minute,
+    );
+    if (scheduledDate.isBefore(now)) {
+      scheduledDate = scheduledDate.add(const Duration(days: 1));
+    }
+    return scheduledDate;
+  }
+
+  NotificationDetails _constNotificationDetails() {
+    return const NotificationDetails(
+      android: AndroidNotificationDetails(
+        channelId,
+        channelName,
+        channelDescription: channelDescription,
+        importance: Importance.max,
+        priority: Priority.high,
+        showWhen: true,
+      ),
+      iOS: DarwinNotificationDetails(),
+    );
   }
 }
