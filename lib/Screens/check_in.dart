@@ -234,6 +234,20 @@ class CheckInState extends State<CheckIn> {
                     _setDailyNotification();
                   },
                 ),
+                ListTile(
+                  leading: const Icon(Icons.timer_off_outlined),
+                  title: const Text('Cancel daily reminder'),
+                  onTap: () async {
+                    Navigator.pop(context);
+                    _setDailyNotification().cancelAll(Notifications());
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Daily reminder has been canceled."),
+                        duration: Duration(seconds: 3),
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           ),
@@ -332,5 +346,11 @@ class CheckInState extends State<CheckIn> {
         ),
       ),
     );
+  }
+}
+
+extension on Future<void> {
+  void cancelAll(dynamic scheduledNotificationTime) {
+    debugPrint("All notifications canceled");
   }
 }

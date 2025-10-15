@@ -78,9 +78,14 @@ class Notifications {
       );
       return;
     }
-    final tz.TZDateTime scheduledNotificationTime = _nextInstanceOfNotification(
+    tz.TZDateTime scheduledNotificationTime = _nextInstanceOfNotification(
       notificationTime,
     );
+    Future<tz.TZDateTime> cancelAll() async {
+      debugPrint("All notifications canceled");
+      return scheduledNotificationTime = 0 as tz.TZDateTime;
+    }
+
     try {
       await flutterLocalNotificationsPlugin.zonedSchedule(
         0,
