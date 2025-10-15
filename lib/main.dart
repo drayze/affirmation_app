@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:b_kind_2_u/Screens/check_in.dart';
 import 'package:b_kind_2_u/brain/settings.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'brain/notifications.dart';
+import 'dart:core';
 
 //main function to run the app
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize timezone to get local timezone
   tz.initializeTimeZones();
-  final TimezoneInfo currentTimeZone = await FlutterTimezone.getLocalTimezone();
-  //final String timeZoneName = await FlutterTimezone.getLocalTimezone();
-  tz.setLocalLocation(tz.getLocation(currentTimeZone.identifier));
+  Future<void> findingCurrentLocation() async {
+    final String? timeZoneName = await FlutterTimezone.getLocalTimezone();
+    tz.setLocalLocation(tz.getLocation(timeZoneName!));
+  }
+
+  await findingCurrentLocation();
+  //await _initializeTimeZone();
+  //await _initializeNotifications();
 
   // Check sharedPreferences for saved settings and defaulted to 'loved' if empty
   final prefs = await SharedPreferences.getInstance();
@@ -23,7 +29,8 @@ void main() async {
   final initSettings = Settings.allSettings[settingsId] ?? Settings.loved;
 
   // initialize notifications
-  await Notifications().init();
+  final notifications = Notifications();
+  await notifications.init(tz.local);
 
   runApp(Affirmations(initSettings: initSettings));
 }
