@@ -4,6 +4,7 @@ import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:flutter/foundation.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
 
 // This function needs to be a top-level function (not inside a class)
 // It handles what happens when a user taps on the notification.
@@ -29,13 +30,11 @@ class Notifications {
 
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
-  Future<void> initializeTimeZones() async {
-    tz.initializeTimeZones();
-    debugPrint("Timezones initialized");
-  }
 
-  Future<void> init() async {
-    await initializeTimeZones();
+  late tz.Location _local;
+
+  Future<void> init(tz.Location location) async {
+    _local = location;
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings("@mipmap/ic_launcher");
     const DarwinInitializationSettings initializationSettingsIOS =
@@ -92,6 +91,8 @@ class Notifications {
         scheduledNotificationTime,
         _constNotificationDetails(), // Get the details from our helper method
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        //uiLocalNotificationDateInterpretation:
+        //  UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents:
             DateTimeComponents.time, // Repeat daily at this time
       );
@@ -104,9 +105,9 @@ class Notifications {
   }
 
   tz.TZDateTime _nextInstanceOfNotification(DateTime time) {
-    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    final tz.TZDateTime now = tz.TZDateTime.now(_local);
     tz.TZDateTime scheduledDate = tz.TZDateTime(
-      tz.local,
+      _local,
       now.year,
       now.month,
       now.day,
@@ -133,3 +134,5 @@ class Notifications {
     );
   }
 }
+
+class UILocalNotificationDateInterpretation {}
