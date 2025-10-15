@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:second_try/Screens/check_in.dart';
-import 'package:second_try/brain/settings.dart';
+import 'package:daily_support/Screens/check_in.dart';
+import 'package:daily_support/brain/settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {

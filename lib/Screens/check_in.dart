@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:second_try/gears/affirmationProvider.dart';
-import 'package:second_try/brain/settings.dart';
+import 'package:daily_support/gears/affirmation_provider.dart';
+import 'package:daily_support/brain/settings.dart';
 
 AffirmationProvider affirmationProvider =
     AffirmationProvider.withDefaultAffirmations();
