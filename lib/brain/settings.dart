@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+//A class containing settings themes for the user to choose from
 
 class Settings {
   final String id;
@@ -15,6 +16,8 @@ class Settings {
     required this.bottomRow,
   });
 
+  //Themes
+  // loved theme, Summer of the 4 settings
   static const Settings loved = Settings(
     id: 'loved',
     appBarColor: Colors.purple,
@@ -23,14 +26,16 @@ class Settings {
     bottomRow: '🌺 🌻 🦉 🌼 🪻',
   );
 
+  // darkness theme, Autumn of the 4 settings
   static const Settings darkness = Settings(
     id: 'darkness',
     appBarColor: Colors.black,
     backgroundColor: Colors.orangeAccent,
     topRow: '💀       👻',
-    bottomRow: '🦇 🩻 👽 🎃 🧟‍♂️️',
+    bottomRow: '🦇 ☠️ 👽 🎃 🧟‍♂️️',
   );
 
+  // kindness theme, Winter of the 4 settings
   static const Settings kindness = Settings(
     id: 'kindness',
     appBarColor: Colors.brown,
@@ -39,6 +44,7 @@ class Settings {
     bottomRow: '🐻 🐺 🐶 🦝 🐻‍❄️',
   );
 
+  // inspired theme, Spring of the 4 settings
   static const Settings inspired = Settings(
     id: 'inspired',
     appBarColor: Colors.black,

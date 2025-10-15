@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "second_try" "\0"
+            VALUE "FileDescription", "b_kind_2_u" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "second_try" "\0"
+            VALUE "InternalName", "com.drayze.b_kind_2_u" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2025 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "second_try.exe" "\0"
-            VALUE "ProductName", "second_try" "\0"
+            VALUE "OriginalFilename", "b_kind_2_u.exe" "\0"
+            VALUE "ProductName", "b_kind_2_u" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
