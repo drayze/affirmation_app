@@ -13,18 +13,15 @@ import 'dart:core';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final TimezoneName = await FlutterTimezone.getLocalTimezone();
-  //debugPrint(${TimezoneName.toString()});
+  tz.initializeTimeZones();
+  Future<void> findingCurrentLocation() async {
+    final String? timeZoneName = await FlutterTimezone.getLocalTimezone();
+    tz.setLocalLocation(tz.getLocation(timeZoneName!));
+  }
 
-  // Initialize timezone data
-  // tz.initializeTimeZones();
-  // Get the current timezone
-  //final timeZoneName = await FlutterTimezone.getLocalTimezone();
-  // Get the timezone name
-  // Get the location object for the current timezone
-  //  final tz.Location location = tz.getLocation('');
-  // Set the timezone for the notifications
-  //tz.setLocalLocation(TimezoneName as tz.Location);
+  await findingCurrentLocation();
+  //await _initializeTimeZone();
+  //await _initializeNotifications();
 
   // Check sharedPreferences for saved settings and defaulted to 'loved' if empty
   final prefs = await SharedPreferences.getInstance();
@@ -33,7 +30,7 @@ void main() async {
 
   // initialize notifications
   final notifications = Notifications();
-  //await notifications.init();
+  await notifications.init(tz.local);
 
   runApp(Affirmations(initSettings: initSettings));
 }
