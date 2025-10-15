@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:b_kind_2_u/Screens/check_in.dart';
 import 'package:b_kind_2_u/brain/settings.dart';
-import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest_all.dart' as tz;

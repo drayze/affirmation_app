@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:flutter/foundation.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:flutter_timezone/flutter_timezone.dart';
 
 // This function needs to be a top-level function (not inside a class)
 // It handles what happens when a user taps on the notification.
