@@ -1,11 +1,27 @@
 import 'dart:math';
+import 'package:shared_preferences/shared_preferences.dart';
 
 //this is the code for the affirmation provider functionality
 //class containing a list of affirmations to pull from
 class AffirmationProvider {
-  final List<String> _affirmations;
+  // A private list holding all affirmations
+  final List<String> _allAffirmations;
+  // A private list holding the affirmations after they are shuffled
+  // Each time an affirmation is used it is removed from this list
+  late List<String> _availableAffirmations;
+  static const _storedAffirmationsKey = 'still_available_affirmations';
 
-  AffirmationProvider(this._affirmations);
+  AffirmationProvider(this._allAffirmations) : _availableAffirmations = [];
+  Future<void> init() async {
+    final prefs = await SharedPreferences.getInstance();
+    final _storedAffirmationsList = prefs.getStringList(_storedAffirmationsKey);
+    if (_storedAffirmationsList != null && _storedAffirmationsList.isNotEmpty) {
+      _availableAffirmations = _storedAffirmationsList;
+    } else {
+      _availableAffirmations = List.from(_allAffirmations)..shuffle(Random());
+      _saveAvailableAffirmations();
+    }
+  }
 
   // Affirmation list to be used by the provider
   factory AffirmationProvider.withDefaultAffirmations() {
@@ -158,7 +174,7 @@ class AffirmationProvider {
       "Don't forget to celebrate the silent battles that you won today.",
       "Flowers grow out of dirt and manure. Blooming, Baby!",
       "Everything I need to get it done is already inside of me.",
-      "Your ending is unwritten. It's never too late to build the life you deserve.",
+      "My ending is unwritten. It's never too late to build the life I deserve.",
       "No one else is dwelling on your mistakes. Neither should you.",
       "I am so proud of how far I've come, and I'm not done yet.",
       "I let no one disturb my peace.",
@@ -168,13 +184,18 @@ class AffirmationProvider {
     ]);
   }
   //check screen for affirmation
-  String getAffirmation() {
-    if (_affirmations.isEmpty) {
-      return "No affirmations available.";
+  Future<String> getAffirmation() async {
+    if (_availableAffirmations.isEmpty) {
+      _availableAffirmations = List.from(_allAffirmations)..shuffle(Random());
     }
-    //get a random affirmation via a random int
-    final random = Random();
-    final index = random.nextInt(_affirmations.length);
-    return _affirmations[index];
+
+    final affirmation = _availableAffirmations.removeLast();
+    _saveAvailableAffirmations();
+    return affirmation;
+  }
+
+  Future<void> _saveAvailableAffirmations() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(_storedAffirmationsKey, _availableAffirmations);
   }
 }
