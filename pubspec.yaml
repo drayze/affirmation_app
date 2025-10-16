@@ -40,6 +40,7 @@ dependencies:
   timezone: ^0.10.1
   flutter_timezone: ^4.1.1
   permission_handler: ^11.0.4
+  path: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -65,13 +66,13 @@ flutter_launcher_icons:
   min_sdk: 21
 
 flutter_native_splash:
-  color: "#E5C5FA"
+  color: "#c23691"
   image: assets/resilience.jpg
   android_12:
-    color: "#E5C5FA"
+    color: "#c23691"
     image: assets/resilience.jpg
   ios:
-    color: "#E5C5FA"
+    color: "#c23691"
     image: assets/resilience.jpg
 # The following section is specific to Flutter packages.
 flutter:

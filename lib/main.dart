@@ -14,8 +14,8 @@ void main() async {
 
   tz.initializeTimeZones();
   Future<void> findingCurrentLocation() async {
-    final String? timeZoneName = await FlutterTimezone.getLocalTimezone();
-    tz.setLocalLocation(tz.getLocation(timeZoneName!));
+    final String timeZoneName = await FlutterTimezone.getLocalTimezone();
+    tz.setLocalLocation(tz.getLocation(timeZoneName));
   }
 
   await findingCurrentLocation();

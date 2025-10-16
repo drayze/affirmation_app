@@ -3,9 +3,12 @@ import 'dart:math';
 //this is the code for the affirmation provider functionality
 //class containing a list of affirmations to pull from
 class AffirmationProvider {
-  final List<String> _affirmations;
+  final List<String> _allAffirmations;
+  late List<String> _availableAffirmations;
 
-  AffirmationProvider(this._affirmations);
+  AffirmationProvider(this._allAffirmations) {
+    _availableAffirmations = List.from(_allAffirmations)..shuffle(Random());
+  }
 
   // Affirmation list to be used by the provider
   factory AffirmationProvider.withDefaultAffirmations() {
@@ -158,7 +161,7 @@ class AffirmationProvider {
       "Don't forget to celebrate the silent battles that you won today.",
       "Flowers grow out of dirt and manure. Blooming, Baby!",
       "Everything I need to get it done is already inside of me.",
-      "Your ending is unwritten. It's never too late to build the life you deserve.",
+      "My ending is unwritten. It's never too late to build the life I deserve.",
       "No one else is dwelling on your mistakes. Neither should you.",
       "I am so proud of how far I've come, and I'm not done yet.",
       "I let no one disturb my peace.",
@@ -169,12 +172,10 @@ class AffirmationProvider {
   }
   //check screen for affirmation
   String getAffirmation() {
-    if (_affirmations.isEmpty) {
-      return "No affirmations available.";
+    if (_availableAffirmations.isEmpty) {
+      _availableAffirmations = List.from(_allAffirmations)..shuffle(Random());
     }
-    //get a random affirmation via a random int
-    final random = Random();
-    final index = random.nextInt(_affirmations.length);
-    return _affirmations[index];
+
+    return _availableAffirmations.removeLast();
   }
 }
