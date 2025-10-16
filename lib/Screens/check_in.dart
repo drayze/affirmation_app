@@ -26,7 +26,8 @@ class CheckInState extends State<CheckIn> {
   final AffirmationProvider affirmationProvider =
       AffirmationProvider.withDefaultAffirmations();
 
-  late String currentAffirmation; // Holds the current affirmation
+  String currentAffirmation =
+      'Loading affirmation.'; // Holds the current affirmation
 
   final CustomImageHandler _imageHandler = CustomImageHandler();
   File? _backgroundImageFile; // Holds the background image file
@@ -35,9 +36,21 @@ class CheckInState extends State<CheckIn> {
   @override
   void initState() {
     super.initState();
-    currentAffirmation = affirmationProvider
-        .getAffirmation(); // Initialize the affirmation
+    _loadAffirmation(); // Initialize the affirmation
     _loadBackgroundImage(); // Load the background image
+  }
+
+  void _loadAffirmation() async {
+    try {
+      final newAffirmation = await affirmationProvider.getAffirmation();
+      if (mounted) {
+        setState(() {
+          currentAffirmation = newAffirmation;
+        });
+      }
+    } catch (e) {
+      debugPrint("Error loading affirmation: $e");
+    }
   }
 
   // Function to load the background image
@@ -128,9 +141,10 @@ class CheckInState extends State<CheckIn> {
   }
 
   //function to update the affirmation
-  void _updateAffirmation() {
+  void _updateAffirmation() async {
+    final newAffirmation = await affirmationProvider.getAffirmation();
     setState(() {
-      currentAffirmation = affirmationProvider.getAffirmation();
+      currentAffirmation = newAffirmation;
     });
   }
 

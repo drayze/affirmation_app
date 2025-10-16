@@ -1,13 +1,26 @@
 import 'dart:math';
+import 'package:shared_preferences/shared_preferences.dart';
 
 //this is the code for the affirmation provider functionality
 //class containing a list of affirmations to pull from
 class AffirmationProvider {
+  // A private list holding all affirmations
   final List<String> _allAffirmations;
+  // A private list holding the affirmations after they are shuffled
+  // Each time an affirmation is used it is removed from this list
   late List<String> _availableAffirmations;
+  static const _storedAffirmationsKey = 'still_available_affirmations';
 
-  AffirmationProvider(this._allAffirmations) {
-    _availableAffirmations = List.from(_allAffirmations)..shuffle(Random());
+  AffirmationProvider(this._allAffirmations) : _availableAffirmations = [];
+  Future<void> init() async {
+    final prefs = await SharedPreferences.getInstance();
+    final _storedAffirmationsList = prefs.getStringList(_storedAffirmationsKey);
+    if (_storedAffirmationsList != null && _storedAffirmationsList.isNotEmpty) {
+      _availableAffirmations = _storedAffirmationsList;
+    } else {
+      _availableAffirmations = List.from(_allAffirmations)..shuffle(Random());
+      _saveAvailableAffirmations();
+    }
   }
 
   // Affirmation list to be used by the provider
@@ -171,11 +184,18 @@ class AffirmationProvider {
     ]);
   }
   //check screen for affirmation
-  String getAffirmation() {
+  Future<String> getAffirmation() async {
     if (_availableAffirmations.isEmpty) {
       _availableAffirmations = List.from(_allAffirmations)..shuffle(Random());
     }
 
-    return _availableAffirmations.removeLast();
+    final affirmation = _availableAffirmations.removeLast();
+    _saveAvailableAffirmations();
+    return affirmation;
+  }
+
+  Future<void> _saveAvailableAffirmations() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(_storedAffirmationsKey, _availableAffirmations);
   }
 }

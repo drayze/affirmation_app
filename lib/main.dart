@@ -8,6 +8,8 @@ import 'package:timezone/timezone.dart' as tz;
 import 'brain/notifications.dart';
 import 'dart:core';
 
+import 'gears/affirmation_provider.dart';
+
 //main function to run the app
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,13 +21,14 @@ void main() async {
   }
 
   await findingCurrentLocation();
-  //await _initializeTimeZone();
-  //await _initializeNotifications();
 
   // Check sharedPreferences for saved settings and defaulted to 'loved' if empty
   final prefs = await SharedPreferences.getInstance();
   final settingsId = prefs.getString('settings') ?? Settings.loved.id;
   final initSettings = Settings.allSettings[settingsId] ?? Settings.loved;
+  // initialize affirmations and get the stored list of still available affirmations
+  final provider = AffirmationProvider.withDefaultAffirmations();
+  await provider.init();
 
   // initialize notifications
   final notifications = Notifications();
