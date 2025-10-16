@@ -1,5 +1,7 @@
 # affirmation_app
 
+Kind Words Go Along Way
+-------
 An app to change lives.
 
 ## Getting Started
