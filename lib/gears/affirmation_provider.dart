@@ -130,7 +130,7 @@ class AffirmationProvider {
       "No other person can do it like I can.",
       "I will get to where I want to be. I have to just keep going.",
       "My opinions aren't tattoos. I can change them anytime.",
-      "I are not one thing. I am a million amazing things.",
+      "I am not one thing. I am a million amazing things.",
       "Sometimes letting go is the best way to free yourself.",
       "I don't have to be perfect to be amazing.",
       "I don't need permission to say no.",
