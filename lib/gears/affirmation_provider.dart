@@ -14,9 +14,9 @@ class AffirmationProvider {
   AffirmationProvider(this._allAffirmations) : _availableAffirmations = [];
   Future<void> init() async {
     final prefs = await SharedPreferences.getInstance();
-    final _storedAffirmationsList = prefs.getStringList(_storedAffirmationsKey);
-    if (_storedAffirmationsList != null && _storedAffirmationsList.isNotEmpty) {
-      _availableAffirmations = _storedAffirmationsList;
+    final storedAffirmationsList = prefs.getStringList(_storedAffirmationsKey);
+    if (storedAffirmationsList != null && storedAffirmationsList.isNotEmpty) {
+      _availableAffirmations = storedAffirmationsList;
     } else {
       _availableAffirmations = List.from(_allAffirmations)..shuffle(Random());
       _saveAvailableAffirmations();
