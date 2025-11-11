@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'dart:ui';
 import 'package:b_kind_2_u/Screens/check_in.dart';
 import 'package:b_kind_2_u/brain/settings.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
@@ -13,6 +16,16 @@ import 'gears/affirmation_provider.dart';
 //main function to run the app
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;};
+
+  await Hive.initFlutter();
+  await Hive.openBox('settings');
+  await Hive.openBox('affirmations');
+  await Hive.openBox('custom_image');
 
   tz.initializeTimeZones();
   Future<void> findingCurrentLocation() async {
@@ -22,9 +35,9 @@ void main() async {
 
   await findingCurrentLocation();
 
-  // Check sharedPreferences for saved settings and defaulted to 'loved' if empty
-  final prefs = await SharedPreferences.getInstance();
-  final settingsId = prefs.getString('settings') ?? Settings.loved.id;
+  // Check Hive for saved settings and defaulted to 'loved' if empty
+  final settingsBox = Hive.box('settings');
+  final settingsId = settingsBox.get('settings') ?? Settings.loved.id;
   final initSettings = Settings.allSettings[settingsId] ?? Settings.loved;
   // initialize affirmations and get the stored list of still available affirmations
   final provider = AffirmationProvider.withDefaultAffirmations();
@@ -62,8 +75,8 @@ class _AffirmationsState extends State<Affirmations> {
       _currentSettings = newSettings;
     });
 
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('settings', _currentSettings.id);
+    final settingsBox = Hive.box('settings');
+    await settingsBox.put('settings', _currentSettings.id);
   }
 
   // This widget is the root of your application.

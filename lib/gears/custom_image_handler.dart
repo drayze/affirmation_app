@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive/hive.dart';
 import 'dart:isolate';
 
 // --- Isolate Functions (Now dumber and safer) ---
@@ -32,11 +32,12 @@ Future<void> _deleteFileIsolate(String filePath) async {
 
 class CustomImageHandler {
   static const imageKey = 'background_image_path';
+  static const _boxName = 'custom_image';
 
   Future<File?> loadSavedImage() async {
-    // SharedPreferences is fast, so we do it on the main thread.
-    final prefs = await SharedPreferences.getInstance();
-    final imagePath = prefs.getString(imageKey);
+    // Hive is fast, so we do it on the main thread.
+    final box = Hive.box(_boxName);
+    final imagePath = box.get(imageKey);
 
     if (imagePath != null) {
       final imageFile = File(imagePath);
@@ -47,7 +48,7 @@ class CustomImageHandler {
         return imageFile;
       } else {
         // Cleanup bad reference
-        await prefs.remove(imageKey);
+        await box.delete(imageKey);
       }
     }
     return null;
@@ -69,23 +70,23 @@ class CustomImageHandler {
       }),
     );
 
-    // 3. Save the result to SharedPreferences on the main thread (fast, reliable).
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(imageKey, newPath);
+    // 3. Save the result to Hive on the main thread (fast, reliable).
+    final box = Hive.box(_boxName);
+    await box.put(imageKey, newPath);
 
     return File(newPath);
   }
 
   Future<void> clearSavedImage() async {
-    final prefs = await SharedPreferences.getInstance();
-    final imagePath = prefs.getString(imageKey);
+    final box = Hive.box(_boxName);
+    final imagePath = box.get(imageKey);
 
     if (imagePath != null) {
       // 1. Do the heavy file deletion in the background.
       await Isolate.run(() => _deleteFileIsolate(imagePath));
 
       // 2. Remove the key on the main thread (fast, reliable).
-      await prefs.remove(imageKey);
+      await box.delete(imageKey);
     }
   }
 }

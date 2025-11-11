@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive/hive.dart';
 
 //this is the code for the affirmation provider functionality
 //class containing a list of affirmations to pull from
@@ -10,13 +10,14 @@ class AffirmationProvider {
   // Each time an affirmation is used it is removed from this list
   late List<String> _availableAffirmations;
   static const _storedAffirmationsKey = 'still_available_affirmations';
+  static const _boxName = 'affirmations';
 
   AffirmationProvider(this._allAffirmations) : _availableAffirmations = [];
   Future<void> init() async {
-    final prefs = await SharedPreferences.getInstance();
-    final storedAffirmationsList = prefs.getStringList(_storedAffirmationsKey);
-    if (storedAffirmationsList != null && storedAffirmationsList.isNotEmpty) {
-      _availableAffirmations = storedAffirmationsList;
+    final box = Hive.box(_boxName);
+    final storedAffirmationsList = box.get(_storedAffirmationsKey);
+    if (storedAffirmationsList != null && storedAffirmationsList is List && storedAffirmationsList.isNotEmpty) {
+      _availableAffirmations = List<String>.from(storedAffirmationsList);
     } else {
       _availableAffirmations = List.from(_allAffirmations)..shuffle(Random());
       _saveAvailableAffirmations();
@@ -195,7 +196,7 @@ class AffirmationProvider {
   }
 
   Future<void> _saveAvailableAffirmations() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setStringList(_storedAffirmationsKey, _availableAffirmations);
+    final box = Hive.box(_boxName);
+    await box.put(_storedAffirmationsKey, _availableAffirmations);
   }
 }
