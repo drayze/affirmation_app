@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "722335031749",
+    "project_id": "affirmation-app-e4e27",
+    "storage_bucket": "affirmation-app-e4e27.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:722335031749:android:cc9cd1aa93a4ed8b55abac",
+        "android_client_info": {
+          "package_name": "com.drayze.be_kind_2_u"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1TQPX5yGCtD6TWOKyv5SfILtTlgME_Uc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
