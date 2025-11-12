@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'dart:ui';
-import 'package:b_kind_2_u/Screens/check_in.dart';
-import 'package:b_kind_2_u/brain/settings.dart';
+import 'package:be_kind_2_u/Screens/check_in.dart';
+import 'package:be_kind_2_u/brain/settings.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
@@ -20,7 +20,8 @@ void main() async {
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
   PlatformDispatcher.instance.onError = (error, stack) {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-    return true;};
+    return true;
+  };
 
   await Hive.initFlutter();
   await Hive.openBox('settings');

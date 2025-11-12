@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:b_kind_2_u/gears/custom_image_handler.dart';
-import 'package:b_kind_2_u/gears/affirmation_provider.dart';
-import 'package:b_kind_2_u/brain/settings.dart';
-import 'package:b_kind_2_u/brain/notifications.dart';
+import 'package:be_kind_2_u/gears/custom_image_handler.dart';
+import 'package:be_kind_2_u/gears/affirmation_provider.dart';
+import 'package:be_kind_2_u/brain/settings.dart';
+import 'package:be_kind_2_u/brain/notifications.dart';
 
 //Start off with the check in page for the settings
 class CheckIn extends StatefulWidget {
