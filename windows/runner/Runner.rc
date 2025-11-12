@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "b_kind_2_u" "\0"
+            VALUE "CompanyName", "com.drayze" "\0"
+            VALUE "FileDescription", "be_kind_2_u" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "com.drayze.b_kind_2_u" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2025 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "b_kind_2_u.exe" "\0"
-            VALUE "ProductName", "b_kind_2_u" "\0"
+            VALUE "InternalName", "com.drayze.be_kind_2_u" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2025 com.drayze. All rights reserved." "\0"
+            VALUE "OriginalFilename", "be_kind_2_u.exe" "\0"
+            VALUE "ProductName", "be_kind_2_u" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

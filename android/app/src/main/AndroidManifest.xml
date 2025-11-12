@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.drayze.b_kind_2_u">  <!-- FIX #1: Set this to YOUR unique package name. -->
+    package="com.drayze.be_kind_2_u">  <!-- FIX #1: Set this to YOUR unique package name. -->
 
     <!-- Permissions for notifications -->
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
@@ -19,7 +19,7 @@
 
 
     <application
-        android:label="B Kind 2 U"
+        android:label="Be Kind 2 U"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:enableOnBackInvokedCallback="true">
